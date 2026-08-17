@@ -45,15 +45,12 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `LittleLemonDB`.`menu`
+-- Table `LittleLemonDB`.`menus`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`menu` (
+CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`menus` (
   `MenuID` INT NOT NULL AUTO_INCREMENT,
+  `MenuName` VARCHAR(100) NOT NULL,
   `Cuisine` VARCHAR(50) NOT NULL,
-  `Starter` VARCHAR(100) NULL,
-  `Course` VARCHAR(100) NULL,
-  `Drink` VARCHAR(100) NULL,
-  `Dessert` VARCHAR(100) NULL,
   PRIMARY KEY (`MenuID`))
 ENGINE = InnoDB;
 
@@ -78,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`orders` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_orders_menu1`
     FOREIGN KEY (`MenuID`)
-    REFERENCES `LittleLemonDB`.`menu` (`MenuID`)
+    REFERENCES `LittleLemonDB`.`menus` (`MenuID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -111,6 +108,24 @@ CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`staff` (
   `Role` VARCHAR(50) NOT NULL,
   `Salary` DECIMAL(10,2) NOT NULL,
   PRIMARY KEY (`StaffID`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `LittleLemonDB`.`menuItems`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`menuItems` (
+  `ItemID` INT NOT NULL AUTO_INCREMENT,
+  `ItemName` VARCHAR(100) NOT NULL,
+  `Category` VARCHAR(50) NOT NULL,
+  `MenuID` INT NOT NULL,
+  PRIMARY KEY (`ItemID`),
+  INDEX `fk_menuItems_menus1_idx` (`MenuID` ASC) VISIBLE,
+  CONSTRAINT `fk_menuItems_menus1`
+    FOREIGN KEY (`MenuID`)
+    REFERENCES `LittleLemonDB`.`menus` (`MenuID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
